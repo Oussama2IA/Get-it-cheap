@@ -19,12 +19,14 @@ class CurrencySpider(scrapy.Spider):
             data.delete()
             self.first_look = False
 
-        item = CurrencyItem()
-        item['symbol'] = self.currencies[self.index]
         rate = response.css('#ctl00_M_lblToAmount::text').get()
-        item['rate'] = float(rate)
 
-        yield item
+        if rate != None:
+            item = CurrencyItem()
+            item['symbol'] = self.currencies[self.index]
+            item['rate'] = float(rate)
+
+            yield item
 
         self.index += 1
         if self.index < len(self.currencies):
