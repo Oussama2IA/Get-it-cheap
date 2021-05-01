@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'scrapyd',
-    'api.apps.ApiConfig',
+    'api',
+    'frontend'
 ]
 
 MIDDLEWARE = [
@@ -45,7 +46,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "frontend/display/build"],
+        'DIRS': [ BASE_DIR / 'frontend/display/build' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,4 +116,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_DIRS = [BASE_DIR / "frontend/display/build/static"]
+STATICFILES_DIRS = [ BASE_DIR / 'frontend/display/build/static' ]
