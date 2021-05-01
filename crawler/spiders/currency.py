@@ -7,9 +7,10 @@ class CurrencySpider(scrapy.Spider):
     name = 'currency'
     allowed_domains = [ 'www.exchange-rates.org' ]
     search_url = 'https://www.exchange-rates.org/converter/'
-    currencies = ['MAD', 'EUR', 'GBP', 'CNY', 'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR']
+    target_currency = 'MAD'
+    currencies = [ 'USD', 'EUR', 'GBP', 'CNY', 'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR' ]
     index = 0
-    start_urls = [ search_url + currencies[index] + '/USD/1' ]
+    start_urls = [ search_url + currencies[index] + f'/{target_currency}/1' ]
     first_look = True
 
     def parse(self, response):
@@ -27,4 +28,4 @@ class CurrencySpider(scrapy.Spider):
 
         self.index += 1
         if self.index < len(self.currencies):
-            yield scrapy.Request(self.search_url + self.currencies[self.index] + '/USD/1', callback=self.parse)
+            yield scrapy.Request(self.search_url + self.currencies[self.index] + f'/{self.target_currency}/1', callback=self.parse)

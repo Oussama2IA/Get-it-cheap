@@ -8,6 +8,11 @@ from api.serializers import CurrencySerializer
 class AmazonSpider(scrapy.Spider):
     name = 'amazon'
     allowed_domains = [ 'amazon.com' ]
+    try:
+        data = Currency.objects.get(symbol='USD')
+        rate = CurrencySerializer(data).data.get('rate')
+    except Currency.DoesNotExist:
+        rate = None
 
     def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
@@ -16,6 +21,9 @@ class AmazonSpider(scrapy.Spider):
         super(AmazonSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
+        if self.rate == None:
+            return None
+
         results = response.css('.s-latency-cf-section')
 
         for result in results:
@@ -30,13 +38,13 @@ class AmazonSpider(scrapy.Spider):
                 item['search_id'] = self.search_id
                 item['source'] = 'amazon.com'
                 item['name'] = name.strip()
-                item['price'] = float(price_whole.replace(',', '') + '.' + price_fraction)
+                item['price'] = float(price_whole.replace(',', '') + '.' + price_fraction) * self.rate
                 item['url'] = 'https://www.amazon.com' + url
                 item['img'] = img
 
                 yield item
 
-        next_page = response.css(".a-padding-base .a-text-center .a-last a::attr(href)").get()
+        next_page = response.css('.a-padding-base .a-text-center .a-last a::attr(href)').get()
         if next_page is not None:
             next_page = 'https://www.amazon.com' + next_page
             yield scrapy.Request(next_page, callback=self.parse)
@@ -50,7 +58,7 @@ class MobileshopSpider(scrapy.Spider):
         data = Currency.objects.get(symbol='EUR')
         rate = CurrencySerializer(data).data.get('rate')
     except Currency.DoesNotExist:
-        rate = 0
+        rate = None
 
     def __init__(self,*args, **kwargs):
         self.search_id = kwargs.get('search_id')
@@ -59,7 +67,7 @@ class MobileshopSpider(scrapy.Spider):
         super(MobileshopSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
-        if self.rate == 0:
+        if self.rate == None:
             return None
 
         results = response.css('.product-module')
@@ -89,11 +97,6 @@ class MobileshopSpider(scrapy.Spider):
 class RedmiShope(scrapy.Spider):
     name = 'redmishope'
     allowed_domains = [ 'mi-store.ma' ]
-    try:
-        data = Currency.objects.get(symbol='MAD')
-        rate = CurrencySerializer(data).data.get('rate')
-    except Currency.DoesNotExist:
-        rate = 0
 
     def __init__(self,*args, **kwargs):
         self.search_id = kwargs.get('search_id')
@@ -102,10 +105,8 @@ class RedmiShope(scrapy.Spider):
         super(RedmiShope, self).__init__(*args, **kwargs)
 
     def parse(self, response):
-        if self.rate == 0:
-            return None
-
         main_result = response.css('.single-main-content')
+
         if main_result != None:
             item = ProductItem()
             name = main_result.css('.product_title.entry-title::text').get()
@@ -117,7 +118,7 @@ class RedmiShope(scrapy.Spider):
                 item['source'] = 'mobileshop.eu'
                 item['search_id'] = self.search_id
                 item['name'] = name
-                item['price'] = float(price.replace('\xa0','').replace(',', '')) * self.rate
+                item['price'] = float(price.replace('\xa0','').replace(',', ''))
                 item['url'] = url
                 item['img'] = img
 
@@ -147,11 +148,6 @@ class RedmiShope(scrapy.Spider):
 class ElectroPlanet(scrapy.Spider):
     name = 'electroplanet'
     allowed_domains = [ 'electroplanet.ma' ]
-    try:
-        data = Currency.objects.get(symbol='MAD')
-        rate = CurrencySerializer(data).data.get('rate')
-    except Currency.DoesNotExist:
-        rate = 0
 
     def __init__(self,*args, **kwargs):
         self.search_id = kwargs.get('search_id')
@@ -160,9 +156,6 @@ class ElectroPlanet(scrapy.Spider):
         super(ElectroPlanet, self).__init__(*args, **kwargs)
 
     def parse(self, response):
-        if self.rate == 0:
-            return None
-
         results = response.css('.product-item-info')
 
         for result in results:
@@ -178,7 +171,7 @@ class ElectroPlanet(scrapy.Spider):
                 item['source'] = 'electroplanet.ma'
                 item['search_id'] = self.search_id
                 item['name'] = sub_name_1.strip() + ' ' + sub_name_2.strip() + ' ' + sub_name_3.strip()
-                item['price'] = float(price.strip().replace(' ', '')) * self.rate
+                item['price'] = float(price.strip().replace(' ', ''))
                 item['url'] = url.strip()
                 item['img'] = img.strip()
 
@@ -193,11 +186,6 @@ class ElectroPlanet(scrapy.Spider):
 class MywaySpider(scrapy.Spider):
     name = 'myway'
     allowed_domain = [ 'myway.ma' ]
-    try:
-        data = Currency.objects.get(symbol='MAD')
-        rate = CurrencySerializer(data).data.get('rate')
-    except Currency.DoesNotExist:
-        rate = 0
 
     def __init__(self,*args, **kwargs):
         self.search_id = kwargs.get('search_id')
@@ -206,10 +194,8 @@ class MywaySpider(scrapy.Spider):
         super(MywaySpider, self).__init__(*args, **kwargs)  
                   
     def parse(self,response):
-        if self.rate == 0:
-            return None
-
         results = response.css('.product-container')
+
         for result in results:
             item = ProductItem()
             name = result.css('.product-name::text').get()
@@ -221,7 +207,7 @@ class MywaySpider(scrapy.Spider):
                 item['source'] = 'myway.ma'
                 item['search_id'] = self.search_id
                 item['name'] = name.strip()
-                item['price'] = float(price.strip().replace(" Dhs","").replace(' ', '')) * self.rate
+                item['price'] = float(price.strip().replace(" Dhs","").replace(' ', ''))
                 item['url'] = url.strip()
                 item['img'] = img.strip()
 

@@ -14,3 +14,13 @@ class Product(models.Model):
 class Currency(models.Model):
     symbol = models.CharField(max_length=3, unique=True)
     rate = models.FloatField()
+
+    def __str__(self):
+        return self.symbol
+
+class Category(models.Model):
+    category = models.CharField(max_length=30, unique=True)
+    website = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.category

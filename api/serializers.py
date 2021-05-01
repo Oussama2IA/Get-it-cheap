@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Currency
+from .models import Product, Currency, Category
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -11,3 +11,8 @@ class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = ('symbol', 'rate')
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('category', 'website')
