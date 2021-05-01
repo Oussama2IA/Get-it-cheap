@@ -7,7 +7,7 @@ from api.serializers import CurrencySerializer
 # General search
 class AmazonSpider(scrapy.Spider):
     name = 'amazon'
-    allowed_domains = [ 'amazon.com' ]
+    allowed_domains = ['amazon.com']
     try:
         data = Currency.objects.get(symbol='USD')
         rate = CurrencySerializer(data).data.get('rate')
@@ -17,7 +17,8 @@ class AmazonSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
         product = kwargs.get('product')
-        self.start_urls = [ 'https://www.amazon.com/s?k=' + product.replace(" ", "+") ]
+        self.start_urls = [
+            'https://www.amazon.com/s?k=' + product.replace(" ", "+")]
         super(AmazonSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
@@ -38,32 +39,35 @@ class AmazonSpider(scrapy.Spider):
                 item['search_id'] = self.search_id
                 item['source'] = 'amazon.com'
                 item['name'] = name.strip()
-                item['price'] = float(price_whole.replace(',', '') + '.' + price_fraction) * self.rate
+                item['price'] = float(price_whole.replace(
+                    ',', '') + '.' + price_fraction) * self.rate
                 item['url'] = 'https://www.amazon.com' + url
                 item['img'] = img
 
                 yield item
 
-        next_page = response.css('.a-padding-base .a-text-center .a-last a::attr(href)').get()
+        next_page = response.css(
+            '.a-padding-base .a-text-center .a-last a::attr(href)').get()
         if next_page is not None:
             next_page = 'https://www.amazon.com' + next_page
             yield scrapy.Request(next_page, callback=self.parse)
 
 
-# Mobile phones Category
+# Mobile phones category
 class MobileshopSpider(scrapy.Spider):
     name = 'mobileshop'
-    allowed_domains = [ 'mobileshop.eu' ]
+    allowed_domains = ['mobileshop.eu']
     try:
         data = Currency.objects.get(symbol='EUR')
         rate = CurrencySerializer(data).data.get('rate')
     except Currency.DoesNotExist:
         rate = None
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
-        product = kwargs.get('product').replace(' ','+')
-        self.start_urls = [ 'https://www.mobileshop.eu/search/?keyword=' + product ]
+        product = kwargs.get('product').replace(' ', '+')
+        self.start_urls = [
+            'https://www.mobileshop.eu/search/?keyword=' + product]
         super(MobileshopSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
@@ -72,7 +76,7 @@ class MobileshopSpider(scrapy.Spider):
 
         results = response.css('.product-module')
 
-        for result in results :
+        for result in results:
             item = ProductItem()
             name = result.css('.product-name a::text').get()
             price = result.css('.price div::text').get()
@@ -83,25 +87,27 @@ class MobileshopSpider(scrapy.Spider):
                 item['source'] = 'mobileshop.eu'
                 item['search_id'] = self.search_id
                 item['name'] = name
-                item['price'] = float(price.replace('\xa0€','')) * self.rate
+                item['price'] = float(price.replace('\xa0€', '')) * self.rate
                 item['url'] = 'https://www.mobileshop.eu' + url
                 item['img'] = img
 
                 yield item
 
         next_page = response.css('.pager div a::attr(href)').get()
-        if next_page != None :
+        if next_page != None:
             next_page = 'https://www.mobileshop.eu' + next_page
-            yield scrapy.Request(next_page,callback=self.parse)
+            yield scrapy.Request(next_page, callback=self.parse)
+
 
 class RedmiShope(scrapy.Spider):
     name = 'redmishope'
-    allowed_domains = [ 'mi-store.ma' ]
+    allowed_domains = ['mi-store.ma']
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
-        product = kwargs.get('product').replace(' ','+')
-        self.start_urls = [ f'https://mi-store.ma/?product_cat=&s={product}&post_type=product' ]
+        product = kwargs.get('product').replace(' ', '+')
+        self.start_urls = [
+            f'https://mi-store.ma/?product_cat=&s={product}&post_type=product']
         super(RedmiShope, self).__init__(*args, **kwargs)
 
     def parse(self, response):
@@ -118,14 +124,15 @@ class RedmiShope(scrapy.Spider):
                 item['source'] = 'mobileshop.eu'
                 item['search_id'] = self.search_id
                 item['name'] = name
-                item['price'] = float(price.replace('\xa0','').replace(',', ''))
+                item['price'] = float(price.replace(
+                    '\xa0', '').replace(',', ''))
                 item['url'] = url
                 item['img'] = img
 
                 yield item
 
         results = response.css('.v1')
-        
+
         for reuslt in results:
             item = ProductItem()
             name = reuslt.css('.name a::text').get()
@@ -137,22 +144,24 @@ class RedmiShope(scrapy.Spider):
                 item['source'] = 'mi-store.ma'
                 item['search_id'] = self.search_id
                 item['name'] = name
-                item['price'] = float(price.replace('\xa0','').replace(',', '')) * self.rate
+                item['price'] = float(price.replace(
+                    '\xa0', '').replace(',', '')) * self.rate
                 item['url'] = url
                 item['img'] = img
 
                 yield item
 
 
-# laptops & mobile phones & tech accessories categories
+# Laptops & mobile phones & tech accessories categories
 class ElectroPlanet(scrapy.Spider):
     name = 'electroplanet'
-    allowed_domains = [ 'electroplanet.ma' ]
+    allowed_domains = ['electroplanet.ma']
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
-        product = kwargs.get('product').replace(' ','+')
-        self.start_urls = [ f'https://www.electroplanet.ma/recherche?q={product}' ]
+        product = kwargs.get('product').replace(' ', '+')
+        self.start_urls = [
+            f'https://www.electroplanet.ma/recherche?q={product}']
         super(ElectroPlanet, self).__init__(*args, **kwargs)
 
     def parse(self, response):
@@ -160,9 +169,9 @@ class ElectroPlanet(scrapy.Spider):
 
         for result in results:
             item = ProductItem()
-            sub_name_1 =  result.css('.ref::text').get()
-            sub_name_2 =  result.css('.product-item-link .brand::text').get()
-            sub_name_3 =  result.css('.product-item-link .ref::text').get()
+            sub_name_1 = result.css('.ref::text').get()
+            sub_name_2 = result.css('.product-item-link .brand::text').get()
+            sub_name_3 = result.css('.product-item-link .ref::text').get()
             price = result.css('.price::text').get()
             url = result.css('.box-image a::attr(href)').get()
             img = result.css('.box-image img::attr(src)').get()
@@ -170,7 +179,8 @@ class ElectroPlanet(scrapy.Spider):
             if sub_name_1 != None and sub_name_2 != None and sub_name_3 != None and price != None and url != None and img != None:
                 item['source'] = 'electroplanet.ma'
                 item['search_id'] = self.search_id
-                item['name'] = sub_name_1.strip() + ' ' + sub_name_2.strip() + ' ' + sub_name_3.strip()
+                item['name'] = sub_name_1.strip() + ' ' + sub_name_2.strip() + \
+                    ' ' + sub_name_3.strip()
                 item['price'] = float(price.strip().replace(' ', ''))
                 item['url'] = url.strip()
                 item['img'] = img.strip()
@@ -182,18 +192,19 @@ class ElectroPlanet(scrapy.Spider):
                 yield scrapy.Request(next_page, callback=self.parse)
 
 
-# Tech accessories category 
+# Tech accessories category
 class MywaySpider(scrapy.Spider):
     name = 'myway'
-    allowed_domain = [ 'myway.ma' ]
+    allowed_domain = ['myway.ma']
 
-    def __init__(self,*args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.search_id = kwargs.get('search_id')
-        product = kwargs.get('product').replace(' ','+')
-        self.start_urls = [f'https://www.myway.ma/search?controller=search&orderby=position&orderway=desc&search_query={product}']
-        super(MywaySpider, self).__init__(*args, **kwargs)  
-                  
-    def parse(self,response):
+        product = kwargs.get('product').replace(' ', '+')
+        self.start_urls = [
+            f'https://www.myway.ma/search?controller=search&orderby=position&orderway=desc&search_query={product}']
+        super(MywaySpider, self).__init__(*args, **kwargs)
+
+    def parse(self, response):
         results = response.css('.product-container')
 
         for result in results:
@@ -207,7 +218,8 @@ class MywaySpider(scrapy.Spider):
                 item['source'] = 'myway.ma'
                 item['search_id'] = self.search_id
                 item['name'] = name.strip()
-                item['price'] = float(price.strip().replace(" Dhs","").replace(' ', ''))
+                item['price'] = float(price.strip().replace(
+                    " Dhs", "").replace(' ', ''))
                 item['url'] = url.strip()
                 item['img'] = img.strip()
 
@@ -216,4 +228,4 @@ class MywaySpider(scrapy.Spider):
             next_page = response.css('.pagination_next a::attr(href)').get()
             if next_page is not None:
                 next_page = 'https://www.myway.ma' + next_page
-                yield scrapy.Request(next_page,callback=self.parse)
+                yield scrapy.Request(next_page, callback=self.parse)

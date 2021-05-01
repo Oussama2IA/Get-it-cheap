@@ -5,14 +5,17 @@ from api.models import Currency
 
 class CurrencySpider(scrapy.Spider):
     name = 'currency'
-    allowed_domains = [ 'www.exchange-rates.org' ]
+    allowed_domains = ['www.exchange-rates.org']
     target_currency = 'MAD'
-    currencies = [ 'USD', 'EUR', 'GBP', 'CNY', 'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR' ]
+    currencies = ['USD', 'EUR', 'GBP', 'CNY',
+                  'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR']
     index = 0
-    start_urls = [ f'https://www.exchange-rates.org/converter/{currencies[index]}/{target_currency}/1' ]
+    start_urls = [
+        f'https://www.exchange-rates.org/converter/{currencies[index]}/{target_currency}/1']
     first_look = True
 
     def parse(self, response):
+        # Clear currecy table before storing the new data
         if self.first_look:
             data = Currency.objects.all()
             data.delete()

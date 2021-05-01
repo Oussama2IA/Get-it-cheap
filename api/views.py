@@ -9,13 +9,15 @@ from uuid import uuid4
 
 scrapyd = ScrapydAPI('http://localhost:6800')
 
+
 class ProductAPI(APIView):
     serializer_class = ProductSerializer
 
     def post(self, request, format=None):
         product = request.GET.get('product')
         id = str(uuid4())
-        spider_id = scrapyd.schedule(project='default', spider='amazon', search_id=id, product=product)
+        spider_id = scrapyd.schedule(
+            project='default', spider='amazon', search_id=id, product=product)
         return Response({'status': 'Crawling started', 'spider_id': spider_id, 'search_id': id}, status=status.HTTP_202_ACCEPTED)
 
     def get(self, request, format=None):
@@ -40,6 +42,7 @@ class ProductAPI(APIView):
         data = Product.objects.all()
         data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class CurrencyAPI(APIView):
     serializer_class = CurrencySerializer

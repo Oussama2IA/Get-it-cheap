@@ -7,10 +7,12 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ('source', 'name', 'price', 'url', 'img')
 
+
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = ('symbol', 'rate')
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
