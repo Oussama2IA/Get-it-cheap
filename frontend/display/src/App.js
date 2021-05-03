@@ -1,4 +1,4 @@
-import './styles/App.css';
+import './styles/App.scss';
 import Search from './components/Search';
 import Result from './components/Result';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

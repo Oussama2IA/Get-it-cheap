@@ -14,23 +14,25 @@ export default function Search() {
   }
 
   return (
-    <Paper component="form" className="search-box">
-      <IconButton className="icon-button" aria-label="menu">
-        <MenuIcon />
-      </IconButton>
-      <InputBase
-        className="input"
-        placeholder="Search for product"
-        onChange={OnFieldChange}
-      />
-      <IconButton
-        className="icon-button"
-        aria-label="search"
-        component={Link}
-        to={`search?product=${product}`}
-      >
-        <SearchIcon />
-      </IconButton>
-    </Paper>
+    <div className="search-bar">
+      <Paper component="form" className="search-box">
+        <IconButton className="icon-button" aria-label="menu">
+          <MenuIcon />
+        </IconButton>
+        <InputBase
+          className="input"
+          placeholder="Search for product"
+          onChange={OnFieldChange}
+        />
+        <IconButton
+          className="icon-button"
+          aria-label="search"
+          component={Link}
+          to={`search?product=${product}`}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+    </div>
   );
 }

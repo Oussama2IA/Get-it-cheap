@@ -19,14 +19,14 @@ export default function Result(props) {
   function getResult() {
     const spider_id = data['spider_id'];
     const search_id = data['search_id'];
-    if (spider_id != undefined && search_id != undefined) {
+    if (spider_id !== undefined && search_id !== undefined) {
       axios
         .get(`/api/search?spider_id=${spider_id}&search_id=${search_id}`)
         .then((response) => setResult(response.data));
     }
   }
 
-  if (result['status'] != 'Crawling finished') setTimeout(getResult, 5000);
+  if (result['status'] !== 'Crawling finished') setTimeout(getResult, 5000);
   else {
     const search_id = data['search_id'];
     axios.delete(`/api/search?search_id=${search_id}`);
@@ -34,7 +34,7 @@ export default function Result(props) {
     result['result'].forEach((product_data) => {
       let price = product_data['price'].toString().split('.');
       price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (price[1] == undefined) price[1] = '00';
+      if (price[1] === undefined) price[1] = '00';
       else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
       price = price.join('.');
       product_data['price'] = price.concat(' MAD');

@@ -1,11 +1,14 @@
-import React from 'react';
+import { LinearProgress, CircularProgress } from '@material-ui/core';
 
 export default function Loading() {
   return (
-    <div className="d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+    <>
+      <div className="loading">
+        <div className="linear">
+          <LinearProgress color="secondary" />
+        </div>
+        <CircularProgress color="secondary" />
       </div>
-    </div>
+    </>
   );
 }

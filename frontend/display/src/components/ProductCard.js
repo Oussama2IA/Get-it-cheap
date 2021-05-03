@@ -1,15 +1,9 @@
+import { Button } from '@material-ui/core';
+
 export default function ProductCard({ product_data }) {
   return (
-    <div
-      className="card mx-2 my-3"
-      style={{
-        width: '19rem',
-      }}
-    >
-      <div
-        className="d-flex justify-content-center"
-        style={{ height: '15rem' }}
-      >
+    <div className="card mx-2 my-3">
+      <div className="image-card d-flex justify-content-center">
         <img
           src={product_data['img']}
           className="card-img-top mx-2 my-2"
@@ -21,25 +15,17 @@ export default function ProductCard({ product_data }) {
         />
       </div>
       <div className="card-body">
-        <h5
-          className="card-title"
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            height: '4.5rem',
-          }}
-        >
-          {product_data['name']}
-        </h5>
+        <h5 className="card-title">{product_data['name']}</h5>
         {`Price : ${product_data['price']}`}
         <p className="mb-1 text-end">
-          <a
+          <Button
+            variant="contained"
+            color="secondary"
             href={product_data['url']}
             target="_blank"
-            className="btn btn-light"
           >
             source
-          </a>
+          </Button>
         </p>
       </div>
     </div>
