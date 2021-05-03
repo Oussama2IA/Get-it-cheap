@@ -28,8 +28,8 @@ export default function Result(props) {
 
   if (result['status'] != 'Crawling finished') setTimeout(getResult, 5000);
   else {
-    const spider_id = data['spider_id'];
-    axios.delete(`/api/search?spider_id=${spider_id}`);
+    const search_id = data['search_id'];
+    axios.delete(`/api/search?search_id=${search_id}`);
     loading = false;
     result['result'].forEach((product_data) => {
       product_data['price'] = Number(Number(product_data['price']).toFixed(2));
