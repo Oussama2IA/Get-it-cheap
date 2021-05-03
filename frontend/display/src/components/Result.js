@@ -32,7 +32,12 @@ export default function Result(props) {
     axios.delete(`/api/search?search_id=${search_id}`);
     loading = false;
     result['result'].forEach((product_data) => {
-      product_data['price'] = Number(Number(product_data['price']).toFixed(2));
+      let price = product_data['price'].toString().split('.');
+      price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (price[1] == undefined) price[1] = '00';
+      else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
+      price = price.join('.');
+      product_data['price'] = price.concat(' MAD');
     });
   }
 

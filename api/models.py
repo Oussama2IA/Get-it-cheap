@@ -9,6 +9,9 @@ class Product(models.Model):
     url = models.TextField()
     img = models.TextField()
 
+    class Meta:
+        ordering = ['price']
+
     def __str__(self):
         return self.name
 
