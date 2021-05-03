@@ -145,7 +145,7 @@ class RedmiShope(scrapy.Spider):
                 item['search_id'] = self.search_id
                 item['name'] = name
                 item['price'] = float(price.replace(
-                    '\xa0', '').replace(',', '')) * self.rate
+                    '\xa0', '').replace(',', ''))
                 item['url'] = url
                 item['img'] = img
 

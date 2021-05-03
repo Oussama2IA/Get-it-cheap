@@ -3,6 +3,6 @@ from .views import ProductAPI, CurrencyAPI
 
 
 urlpatterns = [
-    path('product', ProductAPI.as_view()),
+    path('search', ProductAPI.as_view()),
     path('currency', CurrencyAPI.as_view())
 ]
