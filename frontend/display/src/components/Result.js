@@ -9,8 +9,8 @@ export default function Result(props) {
   const [result, setResult] = useState({});
 
   useEffect(() => {
-    let category = props.match.params.category;
-    let product = props.match.params.product;
+    const category = props.match.params.category;
+    const product = props.match.params.product;
     axios
       .post(`/api/search?category=${category}&product=${product}`)
       .then((response) => setData(response.data));
@@ -31,15 +31,18 @@ export default function Result(props) {
     const spider_id = data['spider_id'];
     axios.delete(`/api/search?spider_id=${spider_id}`);
     loading = false;
+    result['result'].forEach((product_data) => {
+      product_data['price'] = Number(Number(product_data['price']).toFixed(2));
+    });
   }
 
   return loading ? (
     <Loading />
   ) : (
     <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
-      {result['result'].map((product_data) => {
-        return <ProductCard product_data={product_data} />;
-      })}
+      {result['result'].map((product_data) => (
+        <ProductCard product_data={product_data} />
+      ))}
     </section>
   );
 }
