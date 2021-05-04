@@ -7,12 +7,12 @@ import {
 } from '@material-ui/icons';
 
 export default function Search() {
-  const product = useRef('');
   const category = useRef('general');
+  const [product, setProduct] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
 
   function handleFieldChange(event) {
-    product.current = event.target.value.trim();
+    setProduct(event.target.value.trim());
   }
 
   const handleClick = (event) => {
@@ -59,7 +59,7 @@ export default function Search() {
           aria-label="search"
           color="secondary"
           component={Link}
-          to={`${category.current}/${product.current}`}
+          to={`${category.current}/${product}`}
         >
           <SearchIcon />
         </Button>
