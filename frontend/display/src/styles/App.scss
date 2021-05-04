@@ -38,11 +38,11 @@
   width: 19rem;
 
   .image-card {
-    height: 15rem;
-
     img {
       width: fit-content;
-      height: 15rem;
+      height: fit-content;
+      max-height: 15rem;
+      max-width: 15rem;
     }
   }
 
