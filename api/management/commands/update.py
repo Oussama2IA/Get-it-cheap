@@ -13,8 +13,8 @@ class Command(BaseCommand):
         scrapyd.schedule(project='default', spider='currency')
 
     def category_table():
-        categories = {'general': ['amazon'], 'mobile phones': ['mobileshop', 'redmishope', 'electroplanet'],
-                      'laptops': ['electroplanet'], 'tech accessories': ['electroplanet', 'myway']}
+        categories = {'general': ['amazon'], 'phones': ['mobileshop', 'redmishope', 'electroplanet'],
+                      'laptops': ['electroplanet'], 'accessories': ['electroplanet', 'myway']}
 
         # Clear category table
         data = Category.objects.all()

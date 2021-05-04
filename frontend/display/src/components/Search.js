@@ -59,7 +59,7 @@ export default function Search() {
           aria-label="search"
           color="secondary"
           component={Link}
-          to={`${category.current}/${product}`}
+          to={`${category.current}/${product.current}`}
         >
           <SearchIcon />
         </Button>
