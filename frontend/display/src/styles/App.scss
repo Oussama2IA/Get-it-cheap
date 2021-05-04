@@ -5,20 +5,32 @@
   height: 100vh;
   width: 100vw;
 
+  a {
+    color: #f50057;
+  }
+
   .search-box {
-    padding: 2px 4px;
     display: flex;
     align-items: center;
-    width: 400;
+    height: 50px;
+    border-radius: 100px;
   }
 
   .input {
-    margin-left: spacing(1);
+    padding-left: 5px;
     flex: 1;
+    width: 280px;
   }
 
   .icon-button {
-    padding: 10;
+    height: 100%;
+    &.left {
+      width: 150px;
+      border-radius: 100px 0 0 100px;
+    }
+    &.right {
+      border-radius: 0 100px 100px 0;
+    }
   }
 }
 

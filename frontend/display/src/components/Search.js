@@ -1,37 +1,68 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import { Paper, InputBase, Button, Menu, MenuItem } from '@material-ui/core';
+import {
+  Search as SearchIcon,
+  ArrowDropDown as ArrowDropDownIcon,
+} from '@material-ui/icons';
 
 export default function Search() {
-  const [product, setProduct] = useState('');
+  const product = useRef('');
+  const category = useRef('general');
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  function OnFieldChange(e) {
-    setProduct(e.target.value.trim());
+  function handleFieldChange(event) {
+    product.current = event.target.value.trim();
   }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (event) => {
+    category.current = event.currentTarget.textContent;
+    setAnchorEl(null);
+  };
 
   return (
     <div className="search-bar">
       <Paper component="form" className="search-box">
-        <IconButton className="icon-button" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
+        <Button
+          className="icon-button left"
+          color="secondary"
+          onClick={handleClick}
+        >
+          <span>{category.current}</span>
+          <ArrowDropDownIcon />
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleSelect}>general</MenuItem>
+          <MenuItem onClick={handleSelect}>phones</MenuItem>
+          <MenuItem onClick={handleSelect}>laptops</MenuItem>
+          <MenuItem onClick={handleSelect}>accessories</MenuItem>
+        </Menu>
         <InputBase
           className="input"
           placeholder="Search for product"
-          onChange={OnFieldChange}
+          onChange={handleFieldChange}
         />
-        <IconButton
-          className="icon-button"
+        <Button
+          className="icon-button right"
           aria-label="search"
+          color="secondary"
           component={Link}
-          to={`search?product=${product}`}
+          to={`${category.current}/${product}`}
         >
           <SearchIcon />
-        </IconButton>
+        </Button>
       </Paper>
     </div>
   );
