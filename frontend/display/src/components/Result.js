@@ -2,19 +2,22 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 import Loading from './Loading';
+import SearchBox from '../layouts/SearchBox';
 
 export default function Result(props) {
+  let category = props.match.params.category;
+  let product = props.match.params.product;
   let loading = true;
   const [data, setData] = useState({});
   const [result, setResult] = useState({});
 
   useEffect(() => {
-    const category = props.match.params.category;
-    const product = props.match.params.product;
     axios
       .post(`/api/search?category=${category}&product=${product}`)
       .then((response) => setData(response.data));
-  }, []);
+    loading = true;
+    setResult({});
+  }, [product, category]);
 
   function getResult() {
     const spider_id = data['spider_id'];
@@ -44,10 +47,13 @@ export default function Result(props) {
   return loading ? (
     <Loading />
   ) : (
-    <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
-      {result['result'].map((product_data) => (
-        <ProductCard product_data={product_data} />
-      ))}
-    </section>
+    <div className="result-page">
+      <SearchBox />
+      <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
+        {result['result'].map((product_data) => (
+          <ProductCard product_data={product_data} />
+        ))}
+      </section>
+    </div>
   );
 }
