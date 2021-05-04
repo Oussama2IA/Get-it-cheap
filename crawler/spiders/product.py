@@ -34,7 +34,7 @@ class AmazonSpider(scrapy.Spider):
             url = result.css('.a-link-normal.a-text-normal::attr(href)').get()
             img = result.css('.s-image::attr(src)').get()
 
-            if name != None and price_whole != None and url != None and img != None:
+            if name != None and name.strip() != '' and price_whole != None and url != None and img != None:
                 item = ProductItem()
                 item['search_id'] = self.search_id
                 item['source'] = 'amazon.com'
