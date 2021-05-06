@@ -56,12 +56,14 @@ export default function Result(props) {
 
   const formatPrice = (result) => {
     result.forEach((product_data) => {
-      let price = product_data['price'].toString().split('.');
-      price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (price[1] === undefined) price[1] = '00';
-      else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
-      price = price.join('.');
-      product_data['price'] = price.concat(' MAD');
+      if (!product_data['price'].toString().includes(',')) {
+        let price = product_data['price'].toString().split('.');
+        price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (price[1] === undefined) price[1] = '00';
+        else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
+        price = price.join('.');
+        product_data['price'] = price.concat(' MAD');
+      }
     });
     return result;
   };

@@ -1,6 +1,7 @@
 .vscode/
 venv/
 dbs/
+logs/
 db.sqlite3
 __pycache__/
 *.pyc
