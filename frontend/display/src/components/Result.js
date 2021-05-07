@@ -27,12 +27,26 @@ export default function Result(props) {
     setResult({});
   }, [product, category]);
 
+  const formatPrice = (product_data) => {
+    if (!product_data['price'].toString().includes(' ')) {
+      let price = product_data['price'].toString().split('.');
+      price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if (price[1] === undefined) price[1] = '00';
+      else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
+      price = price.join('.');
+      product_data['price'] = price.concat(' MAD');
+    }
+    return product_data;
+  };
+
   useEffect(() => {
     const indexOfLastProduct = currentPage * productPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productPerPage;
     if (result['result'] !== undefined) {
       setCurrentResult(
-        result['result'].slice(indexOfFirstProduct, indexOfLastProduct)
+        result['result']
+          .slice(indexOfFirstProduct, indexOfLastProduct)
+          .map((product_data) => formatPrice(product_data))
       );
     }
   }, [currentPage, result]);
@@ -54,27 +68,13 @@ export default function Result(props) {
     loading = false;
   }
 
-  const formatPrice = (result) => {
-    result.forEach((product_data) => {
-      if (!product_data['price'].toString().includes(',')) {
-        let price = product_data['price'].toString().split('.');
-        price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        if (price[1] === undefined) price[1] = '00';
-        else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
-        price = price.join('.');
-        product_data['price'] = price.concat(' MAD');
-      }
-    });
-    return result;
-  };
-
   return loading ? (
     <Loading />
   ) : (
     <div className="result-page">
       <SearchBox />
       <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
-        {formatPrice(currentResult).map((product_data) => (
+        {currentResult.map((product_data) => (
           <ProductCard product_data={product_data} />
         ))}
       </section>
