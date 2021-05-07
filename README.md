@@ -49,5 +49,6 @@
 - Open a new terminal and run the following commands:
   - **python manage.py migrate** (to apply migrations to database)
   - **python manage.py update** (to update currenies every hour) (don't close this terminal)
+
 - Now open the last terminal and run the command **python manage.py runserver** to run the project in your localhost
 - Open the localhost in your browser: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
