@@ -45,8 +45,8 @@ export default function Result(props) {
     if (result['result'] !== undefined) {
       setCurrentResult(
         result['result']
-          .slice(indexOfFirstProduct, indexOfLastProduct)
           .map((product_data) => formatPrice(product_data))
+          .slice(indexOfFirstProduct, indexOfLastProduct)
       );
     }
   }, [currentPage, result]);
