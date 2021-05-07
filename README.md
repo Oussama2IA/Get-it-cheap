@@ -29,7 +29,6 @@
 
 # Setup project environment
 
-## Install dependecies
 - You should have python3 installed
 - Clone this repository in your local machine (**git clone https://github.com/Oussama2IA/Get-it-cheap**)
 - Open your terminal and cd to the project directory (**cd project_dir**)
@@ -46,7 +45,7 @@
   - **npm install** (install npm packages we need)
   - **npm run build** (deploy project to production)
   
-## Open project
+# Open project
 - Open the terminal (in the project directory) and run the command **scrapyd** (don't close this terminal)
 - Open a new terminal and run the following commands:
   - **python manage.py migrate** (to apply migrations to database)
