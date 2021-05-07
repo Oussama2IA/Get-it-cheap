@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 
-export default function ProductCard({ product_data }) {
+export default function ProductCard({ product_data, formatPrice }) {
   return (
     <div className="card mx-2 my-3">
       <div className="image-card d-flex justify-content-center">
@@ -16,7 +16,7 @@ export default function ProductCard({ product_data }) {
       </div>
       <div className="card-body">
         <h5 className="card-title">{product_data['name']}</h5>
-        {`Price : ${product_data['price']}`}
+        {`Price : ${formatPrice(product_data['price'])}`}
         <p className="mb-1 text-end">
           <Button
             variant="contained"

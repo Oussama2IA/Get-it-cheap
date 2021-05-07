@@ -18,8 +18,7 @@ export default function Result(props) {
   const [data, setData] = useState({});
   const [result, setResult] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
-  const paginate = (number) => setCurrentPage(number);
+  const [currency, setCurrency] = useState({ symbol: 'MAD', rate: 1 });
 
   useEffect(() => {
     postProduct(category, product).then((response) => setData(response.data));
@@ -27,27 +26,14 @@ export default function Result(props) {
     setResult({});
   }, [product, category]);
 
-  const formatPrice = (product_data) => {
-    if (!product_data['price'].toString().includes(' ')) {
-      let price = product_data['price'].toString().split('.');
-      price[0] = price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (price[1] === undefined) price[1] = '00';
-      else price[1] = Number('.'.concat(price[1])).toFixed(2).substring(2);
-      price = price.join('.');
-      product_data['price'] = price.concat(' MAD');
-    }
-    return product_data;
-  };
-
   useEffect(() => {
     const indexOfLastProduct = currentPage * productPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productPerPage;
     if (result['result'] !== undefined) {
       setCurrentResult(
-        result['result']
-          .map((product_data) => formatPrice(product_data))
-          .slice(indexOfFirstProduct, indexOfLastProduct)
+        result['result'].slice(indexOfFirstProduct, indexOfLastProduct)
       );
+      console.log(result);
     }
   }, [currentPage, result]);
 
@@ -68,6 +54,21 @@ export default function Result(props) {
     loading = false;
   }
 
+  const formatPrice = (price) => {
+    let formated_price = (price * currency.rate).toString().split('.');
+    formated_price[0] = formated_price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (formated_price[1] === undefined) formated_price[1] = '00';
+    else
+      formated_price[1] = Number(`.${formated_price[1]}`)
+        .toFixed(2)
+        .substring(2);
+    formated_price = formated_price.join('.');
+    formated_price = `${formated_price} ${currency.symbol}`;
+    return formated_price;
+  };
+
+  const paginate = (number) => setCurrentPage(number);
+
   return loading ? (
     <Loading />
   ) : (
@@ -75,7 +76,7 @@ export default function Result(props) {
       <SearchBox />
       <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
         {currentResult.map((product_data) => (
-          <ProductCard product_data={product_data} />
+          <ProductCard product_data={product_data} formatPrice={formatPrice} />
         ))}
       </section>
       <PaginationBox
