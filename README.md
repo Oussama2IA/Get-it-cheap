@@ -12,18 +12,18 @@
 # Main development tools
 
 ## Scraping
-- Scrapy
-- Scrapyd
-- Scheduler
+- [Scrapy](https://scrapy.org/)
+- [Scrapyd](https://scrapyd.readthedocs.io/en/stable/)
+- [Schedule](https://schedule.readthedocs.io/en/stable/)
 
 ## Frontend
-- React
-- Bootstrap
-- Material ui
+- [React](https://reactjs.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Material ui](https://material-ui.com/)
 
 ## Backend
-- Django
-- Django REST framework
+- [Django](https://www.djangoproject.com/)
+- [Django REST framework](https://www.django-rest-framework.org/)
 
 # Setup project environment
 
