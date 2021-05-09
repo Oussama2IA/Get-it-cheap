@@ -47,7 +47,17 @@ class ProductAPI(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CurrencyAPI(APIView):
+class CurrencyTableAPI(APIView):
+    serializer_class = CurrencySerializer
+
+    def get(self, request, format=None):
+        data = Currency.objects.all()
+        currencies = []
+        for currency in CurrencySerializer(data, many=True).data:
+            currencies.append(currency.get('symbol'))
+        return Response(currencies, status=status.HTTP_200_OK)
+
+class CurrencyDetailAPI(APIView):
     serializer_class = CurrencySerializer
 
     def get_object(self, symbol):
@@ -56,8 +66,7 @@ class CurrencyAPI(APIView):
         except Currency.DoesNotExist:
             raise Http404
 
-    def get(self, request, format=None):
-        symbol = request.GET.get('symbol')
+    def get(self, request, symbol, format=None):
         data = self.get_object(symbol)
         currency = CurrencySerializer(data)
         return Response(currency.data, status=status.HTTP_200_OK)

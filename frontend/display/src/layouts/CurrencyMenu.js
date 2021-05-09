@@ -1,10 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button, Menu, MenuItem } from '@material-ui/core';
 import { ArrowDropDown as ArrowDropDownIcon } from '@material-ui/icons';
+import { getCurrencyTable } from '../services/fetchCurrency';
 
 export default function CurrencyMenu({ changeCurrency }) {
   const currency = useRef('MAD');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [currencyTable, setCurrencyTable] = useState([]);
+
+  useEffect(() => {
+    getCurrencyTable().then((response) => setCurrencyTable(response.data));
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,16 +38,9 @@ export default function CurrencyMenu({ changeCurrency }) {
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleSelect}>MAD</MenuItem>
-        <MenuItem onClick={handleSelect}>USD</MenuItem>
-        <MenuItem onClick={handleSelect}>EUR</MenuItem>
-        <MenuItem onClick={handleSelect}>GBP</MenuItem>
-        <MenuItem onClick={handleSelect}>CNY</MenuItem>
-        <MenuItem onClick={handleSelect}>JPY</MenuItem>
-        <MenuItem onClick={handleSelect}>AUD</MenuItem>
-        <MenuItem onClick={handleSelect}>SGD</MenuItem>
-        <MenuItem onClick={handleSelect}>CAD</MenuItem>
-        <MenuItem onClick={handleSelect}>JOD</MenuItem>
-        <MenuItem onClick={handleSelect}>SAR</MenuItem>
+        {currencyTable.map((currency) => (
+          <MenuItem onClick={handleSelect}>{currency}</MenuItem>
+        ))}
       </Menu>
     </div>
   );
