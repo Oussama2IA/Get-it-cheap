@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export function getCurrency(symbol) {
-  axios.get(`/api/currency?symbol=${symbol}`);
+export function getCurrencyRate(symbol) {
+  return axios.get(`/api/currency?symbol=${symbol}`);
 }

@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   getProduct,
   postProduct,
   deleteProduct,
 } from '../services/fetchProduct';
+import { getCurrencyRate } from '../services/fetchCurrency';
 import ProductCard from './ProductCard';
 import Loading from './Loading';
 import SearchBox from '../layouts/SearchBox';
 import PaginationBox from '../layouts/PaginationBox';
+import CurrencyMenu from '../layouts/CurrencyMenu';
 
 export default function Result(props) {
   let category = props.match.params.category;
@@ -18,7 +20,8 @@ export default function Result(props) {
   const [data, setData] = useState({});
   const [result, setResult] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [currency, setCurrency] = useState({ symbol: 'MAD', rate: 1 });
+  const currencySymbol = useRef('MAD');
+  const [currencyRate, setCurrencyRate] = useState(1);
 
   useEffect(() => {
     postProduct(category, product).then((response) => setData(response.data));
@@ -33,7 +36,6 @@ export default function Result(props) {
       setCurrentResult(
         result['result'].slice(indexOfFirstProduct, indexOfLastProduct)
       );
-      console.log(result);
     }
   }, [currentPage, result]);
 
@@ -55,7 +57,7 @@ export default function Result(props) {
   }
 
   const formatPrice = (price) => {
-    let formated_price = (price * currency.rate).toString().split('.');
+    let formated_price = (price / currencyRate).toString().split('.');
     formated_price[0] = formated_price[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     if (formated_price[1] === undefined) formated_price[1] = '00';
     else
@@ -63,8 +65,17 @@ export default function Result(props) {
         .toFixed(2)
         .substring(2);
     formated_price = formated_price.join('.');
-    formated_price = `${formated_price} ${currency.symbol}`;
+    formated_price = `${formated_price} ${currencySymbol.current}`;
     return formated_price;
+  };
+
+  const changeCurrency = (currency) => {
+    currencySymbol.current = currency;
+    if (currency === 'MAD') setCurrencyRate(1);
+    else
+      getCurrencyRate(currency).then((response) =>
+        setCurrencyRate(response.data.rate)
+      );
   };
 
   const paginate = (number) => setCurrentPage(number);
@@ -74,6 +85,7 @@ export default function Result(props) {
   ) : (
     <div className="result-page">
       <SearchBox />
+      <CurrencyMenu changeCurrency={changeCurrency} />
       <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
         {currentResult.map((product_data) => (
           <ProductCard product_data={product_data} formatPrice={formatPrice} />
