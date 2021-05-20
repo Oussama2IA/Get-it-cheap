@@ -8,7 +8,7 @@ class CurrencySpider(scrapy.Spider):
     allowed_domains = ['www.exchange-rates.org']
     target_currency = 'MAD'
     currencies = ['USD', 'EUR', 'GBP', 'CNY',
-                  'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR']
+                  'JPY', 'AUD', 'SGD', 'CAD', 'JOD', 'SAR', 'TRY']
     index = 0
     start_urls = [
         f'https://www.exchange-rates.org/converter/{currencies[index]}/{target_currency}/1']

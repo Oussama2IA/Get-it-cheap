@@ -14,7 +14,7 @@ import CurrencyMenu from '../layouts/CurrencyMenu';
 export default function Result(props) {
   let category = props.match.params.category;
   let product = props.match.params.product;
-  let loading = true;
+  const loading = useRef(true);
   const productPerPage = 20;
   const [currentResult, setCurrentResult] = useState([]);
   const [data, setData] = useState({});
@@ -25,7 +25,7 @@ export default function Result(props) {
 
   useEffect(() => {
     postProduct(category, product).then((response) => setData(response.data));
-    loading = true;
+    loading.current = true;
     setResult({});
   }, [product, category]);
 
@@ -53,7 +53,7 @@ export default function Result(props) {
   else {
     const search_id = data['search_id'];
     deleteProduct(search_id);
-    loading = false;
+    loading.current = false;
   }
 
   const formatPrice = (price) => {
@@ -80,7 +80,7 @@ export default function Result(props) {
 
   const paginate = (number) => setCurrentPage(number);
 
-  return loading ? (
+  return loading.current ? (
     <Loading />
   ) : (
     <div className="result-page">
