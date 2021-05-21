@@ -9,7 +9,7 @@
 
 - [x] **Search by category**: To optimize results you can search by category, which allows you to get a result from the best websites for this category.
 
-- [x] **Change currency**: You can also change the currency of the result with high accuracy (currencies are updated every hour).
+- [x] **Change currency**: User can also change the currency of the result with high accuracy (currencies are updated every hour).
 
 # Main development tools
 
