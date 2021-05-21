@@ -7,7 +7,7 @@
 
 - [x] **General search**: Our website provides a general search from the most popular websites like amazon.
 
-- [x] **Search by category**: To optimize results you can search by category, which allows you to get a result from the best websites for this category.
+- [x] **Search by category**: To optimize results users can search by category, which allows them to get a result from the best websites for this category.
 
 - [x] **Change currency**: The user can also change the currency of the result with high accuracy (currencies are updated every hour).
 
