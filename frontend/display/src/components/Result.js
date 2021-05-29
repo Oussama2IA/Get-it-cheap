@@ -5,7 +5,7 @@ import {
   deleteProduct,
 } from '../services/fetchProduct';
 import { getCurrencyRate } from '../services/fetchCurrency';
-import ProductCard from './ProductCard';
+import ProductCard from '../layouts/ProductCard';
 import Loading from './Loading';
 import SearchBox from '../layouts/SearchBox';
 import PaginationBox from '../layouts/PaginationBox';
