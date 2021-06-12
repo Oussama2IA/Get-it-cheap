@@ -92,7 +92,7 @@ export default function Result(props) {
         ))}
       </section>
       <PaginationBox
-        totalProducts={result['result'].length}
+        totalProducts={loading.current ? result['result'].length : 0}
         productPerPage={productPerPage}
         paginate={paginate}
       />
