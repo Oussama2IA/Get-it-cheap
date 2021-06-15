@@ -5,8 +5,8 @@ import {
   Menu as MenuIcon,
   Close as CloseIcon,
   Home as HomeIcon,
-  Info as InfoIcon,
   Mail as MailIcon,
+  Info as InfoIcon,
 } from '@material-ui/icons';
 
 function Navbar() {
@@ -29,7 +29,6 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <div className="logo"></div>
         <Link className="menu icon" onClick={showSidebar} to="#">
           {menuButton().icon}
           <span>{menuButton().text}</span>

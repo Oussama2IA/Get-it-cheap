@@ -1,8 +1,8 @@
 import './styles/App.scss';
 import Navbar from './layouts/Navbar';
 import Footer from './layouts/Footer';
-import Contact from './components/Contact';
 import About from './components/About';
+import Contact from './components/Contact';
 import Search from './components/Search';
 import Result from './components/Result';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap");
+.icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(246, 249, 252, 0.3);
+  color: white;
+  width: 48px;
+  height: 48px;
+  padding: 13px;
+  border-radius: 23px;
+  -webkit-transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1) 0.2s;
+  transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1) 0.2s;
+  z-index: 20;
+}
+
+.icon span {
+  margin: 2px 0 0 5px;
+  -webkit-transition: width 0s linear 0.2s, opacity 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition: width 0s linear 0.2s, opacity 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  overflow: hidden;
+  opacity: 0;
+}
+
+.icon:link {
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.icon:hover {
+  width: 110px;
+  color: white;
+  background: #f50057;
+}
+
+.icon:hover span {
+  opacity: 1;
+}
+
+.content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  color: #fff;
+  max-width: 500px;
+  margin-top: 30px;
+}
+
+.header {
+  font-family: 'Ubuntu', 'Helvetica', 'Arial', sans-serif;
+  font-size: 25px;
+  text-align: center;
+  margin: 0 0 30px 0;
+}
+
+.links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.links h3 {
+  margin: 0 25px;
+  font-size: 1.2rem;
+}
+
+.links a {
+  color: white;
+}
+
+.search-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.search-box .box-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 50px;
+  border-radius: 100px;
+  width: 400px;
+}
+
+.search-box a {
+  color: #f50057;
+}
+
+.search-box .input {
+  padding-left: 5px;
+}
+
+.search-box .icon-button {
+  height: 100%;
+}
+
+.search-box .icon-button.left {
+  width: 150px;
+  border-radius: 100px 0 0 100px;
+}
+
+.search-box .icon-button.right {
+  border-radius: 0 100px 100px 0;
+}
+
+.result-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 30px;
+}
+
+.result-page .card {
+  width: 19rem;
+}
+
+.result-page .card .image-card img {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 15rem;
+  max-width: 15rem;
+}
+
+.result-page .card .card-body a {
+  color: white;
+}
+
+.result-page .card .card-body .card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4.5rem;
+}
+
+.loading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.loading .linear {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}

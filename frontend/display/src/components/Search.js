@@ -5,13 +5,12 @@ import SearchBox from '../layouts/SearchBox';
 export default function Search() {
   return (
     <div className="search-page">
+      <div className="logo"></div>
       <SearchBox />
       <div className="content">
-        <div className="header">Get It Cheap</div>
-        <p className="description">
-          I like all about computer science, especially if it's merged with AI
-          (artificial intelligence).
-        </p>
+        <div className="header">
+          Get your product at the best price you can without losing time.
+        </div>
         <div className="links">
           <Button
             variant="contained"
