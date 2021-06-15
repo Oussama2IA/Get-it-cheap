@@ -5,9 +5,10 @@ function About() {
         <div className="wrapper">
           <div className="header">Get It Cheap</div>
           <p>
-            The main goal of project was to build a price comparison website
-            using scraping. It's main idea is to get the product at the best
-            price you can without losing time searching.
+            Instead of exploring the internet trying to find a product with a
+            suitable price, get it cheap will do this process for you, with our
+            website you can get your product at the best price you can without
+            losing time.
           </p>
         </div>
       </section>
