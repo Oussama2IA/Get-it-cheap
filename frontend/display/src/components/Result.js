@@ -7,7 +7,6 @@ import {
 import { getCurrencyRate } from '../services/fetchCurrency';
 import ProductCard from '../layouts/ProductCard';
 import Loading from './Loading';
-import SearchBox from '../layouts/SearchBox';
 import PaginationBox from '../layouts/PaginationBox';
 import CurrencyMenu from '../layouts/CurrencyMenu';
 import SortData from '../layouts/SortData';
@@ -91,7 +90,6 @@ export default function Result(props) {
     <Loading />
   ) : (
     <div className="result-page">
-      <SearchBox />
       <div className="features">
         <CurrencyMenu changeCurrency={changeCurrency} />
         <SortData changeSortMethod={changeSortMethod} />
