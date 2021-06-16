@@ -9,7 +9,7 @@ export default function Search() {
       <SearchBox />
       <div className="content">
         <div className="header">
-          Get your product at the best price you can without losing time.
+          Get your product at the best price you can without losing time
         </div>
         <div className="links">
           <Button

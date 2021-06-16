@@ -10,6 +10,7 @@ import Loading from './Loading';
 import SearchBox from '../layouts/SearchBox';
 import PaginationBox from '../layouts/PaginationBox';
 import CurrencyMenu from '../layouts/CurrencyMenu';
+import SortData from '../layouts/SortData';
 
 export default function Result(props) {
   let category = props.match.params.category;
@@ -78,6 +79,12 @@ export default function Result(props) {
       );
   };
 
+  const changeSortMethod = () =>
+    setResult({
+      status: result['status'],
+      result: result['result'].reverse(),
+    });
+
   const paginate = (number) => setCurrentPage(number);
 
   return loading.current ? (
@@ -85,14 +92,17 @@ export default function Result(props) {
   ) : (
     <div className="result-page">
       <SearchBox />
-      <CurrencyMenu changeCurrency={changeCurrency} />
+      <div className="features">
+        <CurrencyMenu changeCurrency={changeCurrency} />
+        <SortData changeSortMethod={changeSortMethod} />
+      </div>
       <section className="py-5 container d-flex flex-wrap justify-content-center align-items-start">
         {currentResult.map((product_data) => (
           <ProductCard product_data={product_data} formatPrice={formatPrice} />
         ))}
       </section>
       <PaginationBox
-        totalProducts={loading.current ? result['result'].length : 0}
+        totalProducts={result['result'].length}
         productPerPage={productPerPage}
         paginate={paginate}
       />

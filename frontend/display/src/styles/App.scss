@@ -105,6 +105,13 @@
   align-items: center;
   padding-top: 30px;
 
+  .features {
+    display: flex;
+    div {
+      margin: 0px 10px;
+    }
+  }
+
   .card {
     width: 19rem;
 
