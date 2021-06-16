@@ -1,0 +1,9 @@
+.contact {
+  position: fixed;
+  left: 40px;
+  bottom: 40px;
+}
+
+.contact:hover {
+  width: 130px;
+}
