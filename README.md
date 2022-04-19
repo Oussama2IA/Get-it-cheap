@@ -1,6 +1,6 @@
 # Get it cheap
 
-> This project was part of my academic projects, its main goal was to build a price comparison website using scraping.
+> This project was part of my academic projects, its main goal was to build a price comparison website using web scraping.
 > The main idea of the project is to get the product at the best price you can without losing time searching.
 
 # Project's features
